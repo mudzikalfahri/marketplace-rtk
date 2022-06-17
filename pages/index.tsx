@@ -1,35 +1,42 @@
+import Filters from "@/components/Filter";
 import MainLayout from "@/components/layouts/MainLayout";
-import { useAppSelector } from "@/core/redux/hooks";
+import ProductCardSkeleton from "@/components/loading/ProductCardSkeleton";
+import ProductCard from "@/components/ProductCard";
 import { useGetPostsQuery } from "@/core/redux/slices/posts/queries";
 import type { NextPage } from "next";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
 
 const Home: NextPage = () => {
-  const { isLoading, data, isError } = useGetPostsQuery();
-  const { token } = useAppSelector((state) => state.auth);
-  const router = useRouter();
-  useEffect(() => {
-    if (!token) {
-      router.push("/login");
-    }
-  }, [token]);
+  const { isLoading, data } = useGetPostsQuery();
   return (
     <MainLayout>
-      <div className="text-xl py-8 max-w-xl mx-auto">
-        {isLoading && <div>Loading...</div>}
-        {isError && <div>Error</div>}
-        {data &&
-          data
-            .filter((i, idx) => idx < 20)
-            .map((post) => (
-              <div
-                key={post.id}
-                className="py-3 px-5 shadow-lg shadow-gray-500/20 rounded-md cursor-pointer hover:bg-gray-50 mt-4"
-              >
-                {post.title}
+      <div className="max-w-5xl mx-auto py-32">
+        {/* <SaleSection /> */}
+        <section>
+          <div className="px-8 py-8">
+            <div>
+              <span className="inline-block w-12 h-1 bg-gray-700" />
+
+              <h2 className="mt-1 text-2xl font-extrabold tracking-wide uppercase lg:text-3xl">
+                Shop
+              </h2>
+            </div>
+            <div className="grid grid-cols-4">
+              <Filters />
+
+              <div className="col-span-3 grid grid-cols-2 mt-8 md:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-12">
+                {isLoading &&
+                  [...new Array(10)].map((a, idx) => (
+                    // eslint-disable-next-line react/no-array-index-key
+                    <ProductCardSkeleton key={idx} />
+                  ))}
+                {data &&
+                  data.map((product) => (
+                    <ProductCard data={product} key={product.id} />
+                  ))}
               </div>
-            ))}
+            </div>
+          </div>
+        </section>
       </div>
     </MainLayout>
   );

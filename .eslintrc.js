@@ -33,6 +33,7 @@ module.exports = {
       { js: "never", jsx: "never", ts: "never", tsx: "never" },
     ],
     "react/jsx-uses-react": "off",
+    "jsx-a11y/anchor-is-valid": "off",
     "consistent-return": "off",
     "no-return-assign": "off",
     "react/jsx-props-no-spreading": "off",
