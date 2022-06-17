@@ -7,8 +7,8 @@ const token = getFromStorage("token");
 const user = getFromStorage("user");
 
 const initialState = {
-  token: token || undefined,
-  user: user || undefined,
+  token: token || null,
+  user: user || null,
   isAuthenticated: !!token,
 };
 
@@ -23,8 +23,10 @@ export const store = configureStore({
 });
 
 store.subscribe(() => {
-  localStorage.setItem("token", store.getState().auth.token);
-  localStorage.setItem("user", JSON.stringify(store.getState().auth.user));
+  if (store.getState().auth.token !== null)
+    localStorage.setItem("token", store.getState().auth.token);
+  if (store.getState().auth.user !== null)
+    localStorage.setItem("user", JSON.stringify(store.getState().auth.user));
 });
 
 export type AppDispatch = typeof store.dispatch;

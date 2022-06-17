@@ -2,11 +2,17 @@ import Filters from "@/components/Filter";
 import MainLayout from "@/components/layouts/MainLayout";
 import ProductCardSkeleton from "@/components/loading/ProductCardSkeleton";
 import ProductCard from "@/components/ProductCard";
-import { useGetPostsQuery } from "@/core/redux/slices/posts/queries";
+import { useLazyGetPostsQuery } from "@/core/redux/slices/posts/queries";
 import type { NextPage } from "next";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 const Home: NextPage = () => {
-  const { isLoading, data } = useGetPostsQuery();
+  const router = useRouter();
+  const [trigger, { isLoading, data, isFetching }] = useLazyGetPostsQuery();
+  useEffect(() => {
+    trigger(router.query.category || null);
+  }, [router.query]);
   return (
     <MainLayout>
       <div className="max-w-5xl mx-auto py-32">
@@ -24,12 +30,14 @@ const Home: NextPage = () => {
               <Filters />
 
               <div className="col-span-3 mt-10 md:mt-0 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-12">
-                {isLoading &&
+                {(isLoading || isFetching) &&
                   [...new Array(10)].map((a, idx) => (
                     // eslint-disable-next-line react/no-array-index-key
                     <ProductCardSkeleton key={idx} />
                   ))}
                 {data &&
+                  !isLoading &&
+                  !isFetching &&
                   data.map((product) => (
                     <ProductCard data={product} key={product.id} />
                   ))}

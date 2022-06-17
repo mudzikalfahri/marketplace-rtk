@@ -3,6 +3,7 @@ import React from "react";
 
 const Header = () => {
   const isScrolled = useOnScroll();
+
   return (
     <header className="border-b fixed top-0 left-0 w-full bg-white z-30 border-gray-100">
       {!isScrolled && (

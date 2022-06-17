@@ -2,7 +2,7 @@ export const getFromStorage = (key) => {
   let data;
   if (typeof window !== "undefined") {
     data = window.localStorage.getItem(key);
-    if (key === "twb-user") {
+    if (key === "user") {
       return JSON.parse(data);
     }
   }
