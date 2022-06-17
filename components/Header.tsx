@@ -1,8 +1,13 @@
 import useOnScroll from "@/core/hooks/useOnScroll";
 import React from "react";
+import Link from "next/link";
+import { useAppDispatch, useAppSelector } from "@/core/redux/hooks";
+import { setModalLogin } from "@/core/redux/slices/ui/uiSlice";
 
 const Header = () => {
   const isScrolled = useOnScroll();
+  const dispatch = useAppDispatch();
+  const { token } = useAppSelector((state) => state.auth);
 
   return (
     <header className="border-b fixed top-0 left-0 w-full bg-white z-30 border-gray-100">
@@ -51,27 +56,11 @@ const Header = () => {
             >
               About
             </a>
-
-            <a
-              href="/news"
-              className="block h-16 leading-[4rem] border-b-4 border-transparent hover:text-gray-700 hover:border-current"
-            >
-              News
-            </a>
-
-            <a
-              href="/products"
-              className="block h-16 leading-[4rem] border-b-4 border-transparent hover:text-gray-700 hover:border-current"
-            >
-              Products
-            </a>
-
-            <a
-              href="/contact"
-              className="block h-16 leading-[4rem] border-b-4 border-transparent hover:text-gray-700 hover:border-current"
-            >
-              Contact
-            </a>
+            <Link href="/">
+              <a className="block h-16 leading-[4rem] border-b-4 border-transparent hover:text-gray-700 hover:border-current">
+                Products
+              </a>
+            </Link>
           </nav>
 
           <div className="flex items-center ml-8">
@@ -101,8 +90,11 @@ const Header = () => {
               </span>
 
               <span>
-                <a
-                  href="/account"
+                <button
+                  onClick={() => {
+                    if (!token) return dispatch(setModalLogin());
+                  }}
+                  type="button"
                   className="block p-6 border-b-4 border-transparent hover:border-gray-700"
                 >
                   <svg
@@ -121,7 +113,7 @@ const Header = () => {
                   </svg>
 
                   <span className="sr-only"> Account </span>
-                </a>
+                </button>
               </span>
 
               <span className="hidden sm:block">

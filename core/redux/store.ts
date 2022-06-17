@@ -2,6 +2,7 @@ import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
 import { apiSlice } from "@/core/redux/api/apiSlice";
 import { authReducer } from "@/core/redux/slices/auth";
 import { getFromStorage } from "@/utils/localstorage";
+import uiReducer from "@/core/redux/slices/ui/uiSlice";
 
 const token = getFromStorage("token");
 const user = getFromStorage("user");
@@ -16,6 +17,7 @@ export const store = configureStore({
   reducer: {
     [apiSlice.reducerPath]: apiSlice.reducer,
     auth: authReducer,
+    ui: uiReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(apiSlice.middleware),

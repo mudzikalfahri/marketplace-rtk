@@ -10,15 +10,20 @@ const Filters = () => {
   useEffect(() => {
     if (router.query.category) {
       setFilter(router.query.category);
+      return;
     }
+    setFilter(null);
   }, [router.query]);
   const submitFilter = () => {
     router.push(`?category=${filter}`);
   };
+  const resetFilter = () => {
+    router.push(`/`);
+  };
   return (
     <details
       open
-      className="overflow-hidden col-span-1 border border-gray-200 h-max rounded"
+      className="overflow-hidden md:sticky md:top-20 md:left-0 col-span-1 border border-gray-200 h-max rounded"
     >
       <summary className="flex items-center justify-between px-5 py-3 bg-gray-100 lg:hidden">
         <span className="text-sm font-medium">Toggle Filters</span>
@@ -76,8 +81,12 @@ const Filters = () => {
               ))}
 
             <div className="pt-2">
-              <button type="button" className="text-xs text-gray-500 underline">
-                Reset Type
+              <button
+                onClick={resetFilter}
+                type="button"
+                className="text-xs text-gray-500 underline"
+              >
+                Reset Category
               </button>
             </div>
           </div>
@@ -85,6 +94,7 @@ const Filters = () => {
 
         <div className="flex justify-between px-5 py-3 border-t border-gray-200">
           <button
+            onClick={resetFilter}
             name="reset"
             type="button"
             className="text-xs font-medium text-gray-600 underline rounded"

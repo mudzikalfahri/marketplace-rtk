@@ -7,7 +7,7 @@ const Footer = ({ footerRef }) => (
         store.
       </div>
 
-      <div className="grid grid-cols-1 gap-8 mt-8 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-8 mt-8 sm:grid-cols-2 lg:grid-cols-3">
         <div>
           <p className="font-medium">Company</p>
 
@@ -27,33 +27,6 @@ const Footer = ({ footerRef }) => (
             <a className="hover:opacity-75" href="">
               {" "}
               Careers{" "}
-            </a>
-          </nav>
-        </div>
-
-        <div>
-          <p className="font-medium">Services</p>
-
-          <nav className="flex flex-col mt-4 space-y-2 text-sm text-gray-500">
-            <a className="hover:opacity-75" href="">
-              {" "}
-              1on1 Coaching{" "}
-            </a>
-            <a className="hover:opacity-75" href="">
-              {" "}
-              Company Review{" "}
-            </a>
-            <a className="hover:opacity-75" href="">
-              {" "}
-              Accounts Review{" "}
-            </a>
-            <a className="hover:opacity-75" href="">
-              {" "}
-              HR Consulting{" "}
-            </a>
-            <a className="hover:opacity-75" href="">
-              {" "}
-              SEO Optimisation{" "}
             </a>
           </nav>
         </div>
