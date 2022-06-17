@@ -37,7 +37,7 @@ const Filters = () => (
               id="toy"
               type="checkbox"
               name="type[toy]"
-              className="w-5 h-5 border-gray-300 rounded"
+              className="w-5 text-black accent-black h-5 border-gray-300 rounded"
             />
 
             <label htmlFor="toy" className="ml-3 text-sm font-medium">
@@ -50,7 +50,7 @@ const Filters = () => (
               id="game"
               type="checkbox"
               name="type[game]"
-              className="w-5 h-5 border-gray-300 rounded"
+              className="w-5 text-black accent-black h-5 border-gray-300 rounded"
             />
 
             <label htmlFor="game" className="ml-3 text-sm font-medium">
@@ -63,7 +63,7 @@ const Filters = () => (
               id="outdoor"
               type="checkbox"
               name="type[outdoor]"
-              className="w-5 h-5 border-gray-300 rounded"
+              className="w-5 text-black accent-black h-5 border-gray-300 rounded"
             />
 
             <label htmlFor="outdoor" className="ml-3 text-sm font-medium">
@@ -91,7 +91,7 @@ const Filters = () => (
                 id="3+"
                 type="checkbox"
                 name="age[3+]"
-                className="w-5 h-5 border-gray-300 rounded"
+                className="w-5 text-black accent-black h-5 border-gray-300 rounded"
               />
 
               <label htmlFor="3+" className="ml-3 text-sm font-medium">
@@ -104,7 +104,7 @@ const Filters = () => (
                 id="8+"
                 type="checkbox"
                 name="age[8+]"
-                className="w-5 h-5 border-gray-300 rounded"
+                className="w-5 text-black accent-black h-5 border-gray-300 rounded"
               />
 
               <label htmlFor="8+" className="ml-3 text-sm font-medium">
@@ -117,7 +117,7 @@ const Filters = () => (
                 id="12+"
                 type="checkbox"
                 name="age[12+]"
-                className="w-5 h-5 border-gray-300 rounded"
+                className="w-5 text-black accent-black h-5 border-gray-300 rounded"
               />
 
               <label htmlFor="12+" className="ml-3 text-sm font-medium">
@@ -130,7 +130,7 @@ const Filters = () => (
                 id="16+"
                 type="checkbox"
                 name="age[16+]"
-                className="w-5 h-5 border-gray-300 rounded"
+                className="w-5 text-black accent-black h-5 border-gray-300 rounded"
               />
 
               <label htmlFor="16+" className="ml-3 text-sm font-medium">
@@ -159,7 +159,7 @@ const Filters = () => (
         <button
           name="commit"
           type="button"
-          className="px-5 py-3 text-xs font-medium text-white bg-green-600 rounded"
+          className="px-5 py-3 text-xs font-medium text-white bg-gray-800 rounded"
         >
           Apply Filters
         </button>

@@ -20,10 +20,10 @@ const Home: NextPage = () => {
                 Shop
               </h2>
             </div>
-            <div className="grid grid-cols-4">
+            <div className="md:grid grid-cols-4 mt-8 gap-8">
               <Filters />
 
-              <div className="col-span-3 grid grid-cols-2 mt-8 md:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-12">
+              <div className="col-span-3 mt-10 md:mt-0 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-12">
                 {isLoading &&
                   [...new Array(10)].map((a, idx) => (
                     // eslint-disable-next-line react/no-array-index-key
