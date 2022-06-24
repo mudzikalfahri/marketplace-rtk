@@ -2,9 +2,11 @@ import { apiSlice } from "@/core/redux/api/apiSlice";
 
 export const extendedApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getPosts: builder.query<any, any>({
+    getPosts: builder.query<any, string>({
       query: (args) => `/products${args ? /category/ + args : ""}`,
-      providesTags: ["Post"],
+    }),
+    getPostById: builder.query<any, number>({
+      query: (args) => `/products/${args}`,
     }),
     getCategories: builder.query<any, void>({
       query: () => "/products/categories ",
@@ -26,4 +28,5 @@ export const {
   useAddNewPostMutation,
   useGetCategoriesQuery,
   useLazyGetPostsQuery,
+  useGetPostByIdQuery,
 } = extendedApiSlice;

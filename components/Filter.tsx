@@ -106,7 +106,7 @@ const Filters = () => {
             onClick={submitFilter}
             name="commit"
             type="button"
-            className="px-5 py-3 text-xs font-medium text-white bg-gray-800 rounded"
+            className="px-5 py-3 text-xs font-medium text-white bg-gray-900 rounded"
           >
             Apply Filters
           </button>

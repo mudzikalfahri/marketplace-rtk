@@ -11,8 +11,9 @@ const Home: NextPage = () => {
   const router = useRouter();
   const [trigger, { isLoading, data, isFetching }] = useLazyGetPostsQuery();
   useEffect(() => {
-    trigger(router.query.category || null);
+    trigger(router.query.category as string);
   }, [router.query]);
+  console.log(data);
   return (
     <MainLayout>
       <div className="max-w-5xl mx-auto py-32">
