@@ -13,13 +13,12 @@ const Home: NextPage = () => {
   useEffect(() => {
     trigger(router.query.category as string);
   }, [router.query]);
-  console.log(data);
   return (
     <MainLayout>
       <div className="max-w-5xl mx-auto py-32">
         {/* <SaleSection /> */}
         <section>
-          <div className="px-8 py-8">
+          <div className="px-4 sm:px-6 lg:px-8 py-8">
             <div>
               <span className="inline-block w-12 h-1 bg-gray-700" />
 

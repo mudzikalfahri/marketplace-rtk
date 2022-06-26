@@ -1,7 +1,10 @@
 import MainLayout from "@/components/layouts/MainLayout";
+import LoaderDetails from "@/components/loading/LoaderDetails";
 import { useAppDispatch } from "@/core/redux/hooks";
-import { addItems } from "@/core/redux/slices/cart/cartSlice";
+import { addItems } from "@/core/redux/slices/cart/cartSlices";
 import { useGetPostByIdQuery } from "@/core/redux/slices/posts/queries";
+import { setToast } from "@/core/redux/slices/ui/uiSlice";
+import { ProductType } from "@/core/types/post";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
@@ -11,32 +14,35 @@ const Product: NextPage = () => {
   const dispatch = useAppDispatch();
   const { slug } = router.query;
   const [quantity, setQuantity] = useState<number>(1);
-  const { data } = useGetPostByIdQuery(Number(slug));
+  const { data, isLoading, isFetching } = useGetPostByIdQuery(Number(slug));
+  // const [added, setAdded] = useState<boolean>(false);
   const changeQuantity = (e) => {
     setQuantity(Number(e.target.value));
   };
-  const addItemToCart = (item) => {
+  const addItemToCart = (item: ProductType) => {
     dispatch(addItems({ ...item, quantity }));
+    dispatch(setToast("Item added to cart"));
   };
   return (
     <MainLayout>
+      {(isLoading || isFetching) && <LoaderDetails />}
       {data && (
         <section className="max-w-5xl mx-auto mt-28">
-          <div className="relative max-w-screen-xl px-4 py-8 mx-auto">
+          <div className="relative max-w-screen-xl px-4 sm:px-6 lg:px-8 py-8 mx-auto">
             <div className="grid items-start grid-cols-1 gap-8 md:grid-cols-2">
-              <div className="grid grid-cols-2 gap-4 md:grid-cols-1">
-                <div className="aspect-w-1 aspect-h-1">
+              <div className="grid grid-cols-3 gap-4 md:grid-cols-1">
+                <div className="aspect-w-1 col-span-2 aspect-h-1">
                   <img
-                    alt="Mobile Phone Stand"
+                    alt="product"
                     className="object-cover rounded-xl"
                     src={data.image}
                   />
                 </div>
 
-                <div className="grid grid-cols-2 gap-4 lg:mt-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:mt-4">
                   <div className="aspect-w-1 aspect-h-1">
                     <img
-                      alt="Mobile Phone Stand"
+                      alt="product"
                       className="object-cover rounded-xl"
                       src={data.image}
                     />
@@ -44,7 +50,7 @@ const Product: NextPage = () => {
 
                   <div className="aspect-w-1 aspect-h-1">
                     <img
-                      alt="Mobile Phone Stand"
+                      alt="product"
                       className="object-cover rounded-xl"
                       src={data.image}
                     />

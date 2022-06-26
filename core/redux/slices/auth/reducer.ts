@@ -2,8 +2,18 @@
 /* eslint-disable no-param-reassign */
 import { createReducer } from "@reduxjs/toolkit";
 import { addUser, editUser, deleteUser } from "@/core/redux/slices/auth";
+import { RootState } from "../../store";
 
-const initialState = {
+export interface UserType {
+  user: {
+    name: string;
+    id: number;
+  } | null;
+  token: string | null;
+  isAuthenticated: boolean;
+}
+
+const initialState: UserType = {
   user: null,
   token: null,
   isAuthenticated: false,
@@ -26,5 +36,7 @@ export const authReducer = createReducer(initialState, (builder) => {
       state.isAuthenticated = false;
     });
 });
+
+export const selectAuth = (state: RootState) => state.auth;
 
 export default authReducer;

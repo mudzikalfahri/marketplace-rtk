@@ -5,7 +5,7 @@ import {
   combineReducers,
 } from "@reduxjs/toolkit";
 import { apiSlice } from "@/core/redux/api/apiSlice";
-import { authReducer } from "@/core/redux/slices/auth";
+import { authReducer, UserType } from "@/core/redux/slices/auth";
 import uiReducer from "@/core/redux/slices/ui/uiSlice";
 import {
   persistStore,
@@ -18,53 +18,36 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import cartReducer from "@/core/redux/slices/cart/cartSlice";
+import cartReducer, { CartItemType } from "@/core/redux/slices/cart/cartSlices";
+
+const persistConfig = {
+  key: "root",
+  storage,
+};
 
 const rootReducer = combineReducers({
   [apiSlice.reducerPath]: apiSlice.reducer,
-  auth: authReducer,
+  auth: persistReducer<UserType, any>(persistConfig, authReducer),
   ui: uiReducer,
-  cart: cartReducer,
+  cart: persistReducer<{ items: CartItemType[] }, any>(
+    persistConfig,
+    cartReducer
+  ),
 });
 
-const createStore = () => {
-  let store;
-  const isClient = typeof window !== "undefined";
-  if (isClient) {
-    const persistConfig = {
-      key: "root",
-      storage,
-      whiteList: ["auth", "cart"],
-      blacklist: ["api", "ui"],
-    };
+export const store = configureStore({
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }).concat(apiSlice.middleware),
+});
+export const persistor = persistStore(store);
 
-    store = configureStore({
-      reducer: persistReducer(persistConfig, rootReducer),
-      middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware({
-          serializableCheck: {
-            ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-          },
-        }).concat(apiSlice.middleware),
-    });
-
-    // eslint-disable-next-line no-underscore-dangle
-    store.__PERSISTOR = persistStore(store);
-  } else {
-    store = configureStore({
-      reducer: rootReducer,
-      middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(apiSlice.middleware),
-    });
-  }
-
-  return store;
-};
-
-export const store = createStore();
-
-export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
   RootState,

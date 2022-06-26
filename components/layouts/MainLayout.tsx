@@ -16,7 +16,12 @@ const MainLayout = ({ children }) => {
         <title>Nextjs Starter</title>
       </Head>
       <Header />
-      <div style={{ minHeight: `calc(100vh - ${offset}px)` }}>{children}</div>
+      <div
+        className="flex flex-col justify-center"
+        style={{ minHeight: `calc(100vh - ${offset}px)` }}
+      >
+        {children}
+      </div>
       {modalLogin && <ModalLogin />}
       <Footer footerRef={footerRef} />
     </>

@@ -1,5 +1,7 @@
 /* eslint-disable no-param-reassign */
+import { ProductType } from "@/core/types/post";
 import { createSlice } from "@reduxjs/toolkit";
+import { RootState } from "@/core/redux/store";
 
 const addToCart = (state, product) => {
   const isProductInCart = state.find((item) => item.id === product.id);
@@ -14,11 +16,17 @@ const addToCart = (state, product) => {
   return [...state, { ...product, quantity: 1 }];
 };
 
+export interface CartItemType extends ProductType {
+  quantity: number;
+}
+
+const initialState: { items: CartItemType[] } = {
+  items: [],
+};
+
 const cartSlice = createSlice({
   name: "cart",
-  initialState: {
-    items: [],
-  },
+  initialState,
   reducers: {
     addItems: (state, { payload }) => {
       state.items = addToCart(state.items, payload);
@@ -28,5 +36,8 @@ const cartSlice = createSlice({
     },
   },
 });
+
+export const selectCartItems = (state: RootState) => state.cart.items;
+
 export const { addItems, deleteItem } = cartSlice.actions;
 export default cartSlice.reducer;

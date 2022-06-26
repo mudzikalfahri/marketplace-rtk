@@ -3,11 +3,14 @@ import React from "react";
 import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/core/redux/hooks";
 import { setModalLogin } from "@/core/redux/slices/ui/uiSlice";
+import { selectCartItems } from "@/core/redux/slices/cart/cartSlices";
+import { selectAuth } from "@/core/redux/slices/auth";
 
 const Header = () => {
   const isScrolled = useOnScroll();
   const dispatch = useAppDispatch();
-  const { token } = useAppSelector((state) => state.auth);
+  const cartItems = useAppSelector(selectCartItems);
+  const { token } = useAppSelector(selectAuth);
 
   return (
     <header className="border-b fixed top-0 left-0 w-full bg-white z-30 border-gray-100">
@@ -66,10 +69,7 @@ const Header = () => {
           <div className="flex items-center ml-8">
             <div className="flex items-center border-gray-100 divide-x divide-gray-100 border-x">
               <span>
-                <a
-                  href="/cart"
-                  className="block p-6 border-b-4 border-transparent hover:border-gray-700"
-                >
+                <a className="block cursor-pointer relative p-6 border-b-4 border-transparent hover:border-gray-700">
                   <svg
                     className="w-4 h-4"
                     fill="none"
@@ -84,6 +84,15 @@ const Header = () => {
                       d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
                     />
                   </svg>
+                  {cartItems.length > 0 && (
+                    <div className="w-4 h-4 pointer-events-none absolute bottom-4 right-4 text-[10px] flex justify-center items-center bg-black text-white rounded-full border border-white">
+                      {cartItems.reduce(
+                        // eslint-disable-next-line no-param-reassign
+                        (sum, current) => (sum += current.quantity),
+                        0
+                      )}
+                    </div>
+                  )}
 
                   <span className="sr-only">Cart</span>
                 </a>
