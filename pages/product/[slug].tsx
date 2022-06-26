@@ -1,13 +1,23 @@
 import MainLayout from "@/components/layouts/MainLayout";
+import { useAppDispatch } from "@/core/redux/hooks";
+import { addItems } from "@/core/redux/slices/cart/cartSlice";
 import { useGetPostByIdQuery } from "@/core/redux/slices/posts/queries";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useState } from "react";
 
 const Product: NextPage = () => {
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const { slug } = router.query;
+  const [quantity, setQuantity] = useState<number>(1);
   const { data } = useGetPostByIdQuery(Number(slug));
+  const changeQuantity = (e) => {
+    setQuantity(Number(e.target.value));
+  };
+  const addItemToCart = (item) => {
+    dispatch(addItems({ ...item, quantity }));
+  };
   return (
     <MainLayout>
       {data && (
@@ -111,7 +121,7 @@ const Product: NextPage = () => {
                   </div>
                 </summary>
 
-                <form className="mt-8">
+                <div className="mt-8">
                   <fieldset>
                     <legend className="mb-1 text-sm font-medium">Color</legend>
 
@@ -170,6 +180,8 @@ const Product: NextPage = () => {
 
                   <div className="flex mt-8">
                     <input
+                      onChange={changeQuantity}
+                      value={quantity}
                       type="number"
                       id="quantity"
                       min="1"
@@ -177,13 +189,14 @@ const Product: NextPage = () => {
                     />
 
                     <button
-                      type="submit"
+                      type="button"
+                      onClick={() => addItemToCart(data)}
                       className="block px-5 py-3 ml-3 text-xs font-medium text-white bg-gray-800 rounded hover:bg-gray-900"
                     >
                       Add to Cart
                     </button>
                   </div>
-                </form>
+                </div>
               </div>
             </div>
           </div>

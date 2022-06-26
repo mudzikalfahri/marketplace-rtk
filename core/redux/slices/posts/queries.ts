@@ -1,14 +1,15 @@
 import { apiSlice } from "@/core/redux/api/apiSlice";
+import { ProductType } from "@/core/types/post";
 
 export const extendedApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getPosts: builder.query<any, string>({
+    getPosts: builder.query<ProductType[], string>({
       query: (args) => `/products${args ? /category/ + args : ""}`,
     }),
-    getPostById: builder.query<any, number>({
+    getPostById: builder.query<ProductType, number>({
       query: (args) => `/products/${args}`,
     }),
-    getCategories: builder.query<any, void>({
+    getCategories: builder.query<string[], void>({
       query: () => "/products/categories ",
       providesTags: ["Post"],
     }),

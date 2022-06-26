@@ -1,6 +1,12 @@
-export type IPost = {
+export type ProductType = {
   id: number;
-  userId: number;
+  category: number;
+  description: string;
+  image: string;
+  price: number;
+  rating: {
+    rate: number;
+    count: number;
+  };
   title: string;
-  body: string;
 };
