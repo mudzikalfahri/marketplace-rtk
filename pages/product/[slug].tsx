@@ -1,10 +1,11 @@
 import MainLayout from "@/components/layouts/MainLayout";
 import LoaderDetails from "@/components/loading/LoaderDetails";
 import ModalAddToCart from "@/components/ModalAddToCart";
-import { useAppDispatch } from "@/core/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/core/redux/hooks";
+import { selectAuth } from "@/core/redux/slices/auth";
 import { addItems } from "@/core/redux/slices/cart/cartSlices";
 import { useGetPostByIdQuery } from "@/core/redux/slices/posts/queries";
-import { setToast } from "@/core/redux/slices/ui/uiSlice";
+import { setModalLogin, setToast } from "@/core/redux/slices/ui/uiSlice";
 import { ProductType } from "@/core/types/post";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
@@ -17,15 +18,21 @@ const Product: NextPage = () => {
   const [quantity, setQuantity] = useState<number>(1);
   const { data, isLoading, isFetching } = useGetPostByIdQuery(Number(slug));
   const [added, setAdded] = useState<boolean>(false);
+  const { token } = useAppSelector(selectAuth);
   const changeQuantity = (e) => {
     setQuantity(Number(e.target.value));
   };
   const addItemToCart = (item: ProductType) => {
-    dispatch(addItems({ ...item, quantity }));
-    dispatch(
-      setToast(`${quantity} ${quantity > 1 ? "items" : "item"} added to cart`)
-    );
-    setAdded(true);
+    if (token) {
+      dispatch(addItems({ ...item, quantity }));
+      dispatch(
+        setToast(`${quantity} ${quantity > 1 ? "items" : "item"} added to cart`)
+      );
+      setAdded(true);
+      return;
+    }
+    dispatch(setToast("Please login to add items to cart"));
+    dispatch(setModalLogin());
   };
   return (
     <MainLayout>

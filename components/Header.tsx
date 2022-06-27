@@ -4,13 +4,13 @@ import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/core/redux/hooks";
 import { setModalLogin } from "@/core/redux/slices/ui/uiSlice";
 import { selectCartItems } from "@/core/redux/slices/cart/cartSlices";
-import { selectAuth } from "@/core/redux/slices/auth";
+import { deleteUser, selectAuth } from "@/core/redux/slices/auth";
 
 const Header = () => {
   const isScrolled = useOnScroll();
   const dispatch = useAppDispatch();
   const cartItems = useAppSelector(selectCartItems);
-  const { token } = useAppSelector(selectAuth);
+  const { token, user } = useAppSelector(selectAuth);
 
   return (
     <header className="border-b fixed top-0 left-0 w-full bg-white z-30 border-gray-100">
@@ -27,7 +27,7 @@ const Header = () => {
           </div>
         </div>
       )}
-      <div className="flex items-center justify-between h-16 mx-auto max-w-5xl sm:px-6 lg:px-8">
+      <div className="flex overflow-hidden  items-center justify-between h-16 mx-auto max-w-5xl sm:px-6 lg:px-8">
         <div className="flex items-center">
           <button type="button" className="p-2 sm:mr-4 lg:hidden">
             <svg
@@ -69,7 +69,7 @@ const Header = () => {
 
           <div className="flex items-center ml-8">
             <div className="flex items-center border-gray-100 divide-x divide-gray-100 border-x">
-              <span>
+              <Link href="/cart">
                 <a className="block cursor-pointer relative p-6 border-b-4 border-transparent hover:border-gray-700">
                   <svg
                     className="w-4 h-4"
@@ -97,33 +97,49 @@ const Header = () => {
 
                   <span className="sr-only">Cart</span>
                 </a>
-              </span>
+              </Link>
 
               <span>
-                <button
-                  onClick={() => {
-                    if (!token) return dispatch(setModalLogin());
-                  }}
-                  type="button"
-                  className="block p-6 border-b-4 border-transparent hover:border-gray-700"
-                >
-                  <svg
-                    className="w-4 h-4"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
+                {token ? (
+                  <button
+                    onClick={() => {
+                      dispatch(deleteUser());
+                    }}
+                    type="button"
+                    className="group overflow-hidden"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                    />
-                  </svg>
-
-                  <span className="sr-only"> Account </span>
-                </button>
+                    <div className="p-6 group-hover:hidden flex items-center space-x-2">
+                      <svg
+                        className="w-4 h-4"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                        />
+                      </svg>
+                      <p>{user.name}</p>
+                    </div>
+                    <div className="p-6 group-hover:flex hidden bg-gray-900 text-white">
+                      Sign out
+                    </div>
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (!token) return dispatch(setModalLogin());
+                    }}
+                    className="block h-16 leading-[4rem] border-b-4 border-transparent hover:text-gray-700 text-xs px-4 hover:border-current font-bold text-gray-500"
+                  >
+                    LOGIN
+                  </button>
+                )}
               </span>
 
               <span className="hidden sm:block">

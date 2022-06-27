@@ -13,7 +13,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
         try {
           const { data } = await queryFulfilled;
           // `onSuccess` side-effect
-          dispatch(addUser({ token: data, user: { id: 1, name: "someone" } }));
+          dispatch(addUser({ token: data, user: { id: 1, name: "Budi" } }));
         } catch (err) {
           // `onError` side-effect
         }

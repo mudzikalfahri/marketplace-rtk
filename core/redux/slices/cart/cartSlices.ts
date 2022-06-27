@@ -13,7 +13,7 @@ const addToCart = (state, product) => {
       return item;
     });
   }
-  return [...state, { ...product, quantity: 1 }];
+  return [...state, product];
 };
 
 export interface CartItemType extends ProductType {
