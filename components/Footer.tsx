@@ -2,12 +2,12 @@ import React from "react";
 
 const Footer = ({ footerRef }) => (
   <footer ref={footerRef} className="bg-gray-50">
-    <div className="max-w-5xl px-4 py-16 mx-auto sm:px-6 lg:px-8">
+    <div className="max-w-5xl px-4 py-8 mx-auto sm:px-6 lg:px-8">
       <div className="flex justify-start items-center font-serif text-lg font-semibold">
         store.
       </div>
 
-      <div className="grid grid-cols-1 gap-8 mt-8 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-2 gap-8 mt-8 lg:grid-cols-3">
         <div>
           <p className="font-medium">Company</p>
 

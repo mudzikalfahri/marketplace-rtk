@@ -13,15 +13,10 @@ const MainLayout = ({ children }) => {
   return (
     <>
       <Head>
-        <title>Nextjs Starter</title>
+        <title>Marketplace</title>
       </Head>
       <Header />
-      <div
-        className="flex flex-col justify-center"
-        style={{ minHeight: `calc(100vh - ${offset}px)` }}
-      >
-        {children}
-      </div>
+      <div style={{ minHeight: `calc(100vh - ${offset}px)` }}>{children}</div>
       {modalLogin && <ModalLogin />}
       <Footer footerRef={footerRef} />
     </>

@@ -65,6 +65,48 @@ const Header = () => {
                 Products
               </a>
             </Link>
+            <span>
+              {token ? (
+                <button
+                  onClick={() => {
+                    dispatch(deleteUser());
+                  }}
+                  type="button"
+                  className="group overflow-hidden"
+                >
+                  <div className="p-6 group-hover:hidden flex items-center space-x-2">
+                    <svg
+                      className="w-4 h-4"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                      />
+                    </svg>
+                    <p>{user.name}</p>
+                  </div>
+                  <div className="p-6 group-hover:flex hidden bg-gray-900 text-white">
+                    Sign out
+                  </div>
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (!token) return dispatch(setModalLogin());
+                  }}
+                  className="block h-16 leading-[4rem] border-b-4 border-transparent hover:text-gray-700 text-xs px-4 hover:border-current font-bold text-gray-500"
+                >
+                  LOGIN
+                </button>
+              )}
+            </span>
           </nav>
 
           <div className="flex items-center ml-8">
@@ -98,49 +140,6 @@ const Header = () => {
                   <span className="sr-only">Cart</span>
                 </a>
               </Link>
-
-              <span>
-                {token ? (
-                  <button
-                    onClick={() => {
-                      dispatch(deleteUser());
-                    }}
-                    type="button"
-                    className="group overflow-hidden"
-                  >
-                    <div className="p-6 group-hover:hidden flex items-center space-x-2">
-                      <svg
-                        className="w-4 h-4"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                        />
-                      </svg>
-                      <p>{user.name}</p>
-                    </div>
-                    <div className="p-6 group-hover:flex hidden bg-gray-900 text-white">
-                      Sign out
-                    </div>
-                  </button>
-                ) : (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      if (!token) return dispatch(setModalLogin());
-                    }}
-                    className="block h-16 leading-[4rem] border-b-4 border-transparent hover:text-gray-700 text-xs px-4 hover:border-current font-bold text-gray-500"
-                  >
-                    LOGIN
-                  </button>
-                )}
-              </span>
 
               <span className="hidden sm:block">
                 <a

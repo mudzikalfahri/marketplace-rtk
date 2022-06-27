@@ -22,7 +22,7 @@ const Cart: NextPage = () => {
           <TotalSummary cartItems={cartItems} />
         </section>
       ) : (
-        <div className="mx-auto font-semibold">
+        <div className="flex items-center justify-center pt-40 font-semibold">
           You have no items in the cart
         </div>
       )}

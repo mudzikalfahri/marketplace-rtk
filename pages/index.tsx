@@ -15,7 +15,7 @@ const Home: NextPage = () => {
   }, [router.query]);
   return (
     <MainLayout>
-      <div className="max-w-5xl mx-auto py-32">
+      <div className="max-w-5xl mx-auto pt-32 pb-24">
         {/* <SaleSection /> */}
         <section>
           <div className="px-4 sm:px-6 lg:px-8 py-8">
