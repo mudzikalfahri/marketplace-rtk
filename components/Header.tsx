@@ -45,10 +45,11 @@ const Header = () => {
               />
             </svg>
           </button>
-
-          <div className="flex justify-center items-center font-serif text-lg font-semibold">
-            store.
-          </div>
+          <Link href="/">
+            <a className="flex justify-center items-center font-serif text-lg font-semibold">
+              store.
+            </a>
+          </Link>
         </div>
 
         <div className="flex items-center justify-end flex-1">

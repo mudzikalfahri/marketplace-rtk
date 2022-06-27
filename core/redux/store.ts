@@ -20,17 +20,21 @@ import {
 import storage from "redux-persist/lib/storage";
 import cartReducer, { CartItemType } from "@/core/redux/slices/cart/cartSlices";
 
-const persistConfig = {
-  key: "root",
+const persistConfigAuth = {
+  key: "auth",
+  storage,
+};
+const persistConfigCart = {
+  key: "cart",
   storage,
 };
 
 const rootReducer = combineReducers({
   [apiSlice.reducerPath]: apiSlice.reducer,
-  auth: persistReducer<UserType, any>(persistConfig, authReducer),
+  auth: persistReducer<UserType, any>(persistConfigAuth, authReducer),
   ui: uiReducer,
   cart: persistReducer<{ items: CartItemType[] }, any>(
-    persistConfig,
+    persistConfigCart,
     cartReducer
   ),
 });

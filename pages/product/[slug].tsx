@@ -1,5 +1,6 @@
 import MainLayout from "@/components/layouts/MainLayout";
 import LoaderDetails from "@/components/loading/LoaderDetails";
+import ModalAddToCart from "@/components/ModalAddToCart";
 import { useAppDispatch } from "@/core/redux/hooks";
 import { addItems } from "@/core/redux/slices/cart/cartSlices";
 import { useGetPostByIdQuery } from "@/core/redux/slices/posts/queries";
@@ -15,20 +16,24 @@ const Product: NextPage = () => {
   const { slug } = router.query;
   const [quantity, setQuantity] = useState<number>(1);
   const { data, isLoading, isFetching } = useGetPostByIdQuery(Number(slug));
-  // const [added, setAdded] = useState<boolean>(false);
+  const [added, setAdded] = useState<boolean>(false);
   const changeQuantity = (e) => {
     setQuantity(Number(e.target.value));
   };
   const addItemToCart = (item: ProductType) => {
     dispatch(addItems({ ...item, quantity }));
-    dispatch(setToast("Item added to cart"));
+    dispatch(
+      setToast(`${quantity} ${quantity > 1 ? "items" : "item"} added to cart`)
+    );
+    setAdded(true);
   };
   return (
     <MainLayout>
       {(isLoading || isFetching) && <LoaderDetails />}
+      {added && <ModalAddToCart close={() => setAdded(false)} data={data} />}
       {data && (
         <section className="max-w-5xl mx-auto mt-28">
-          <div className="relative max-w-screen-xl px-4 sm:px-6 lg:px-8 py-8 mx-auto">
+          <div className="relative px-4 sm:px-6 lg:px-8 py-8 mx-auto">
             <div className="grid items-start grid-cols-1 gap-8 md:grid-cols-2">
               <div className="grid grid-cols-3 gap-4 md:grid-cols-1">
                 <div className="aspect-w-1 col-span-2 aspect-h-1">
